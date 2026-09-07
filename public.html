@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Kuliah — Teknik Informatika · Ganjil 2026/2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF3FB;
+  --paper-2:#E1EAF8;
+  --ink:#0E2038;
+  --ink-soft:#4E6488;
+  --navy:#173B6C;
+  --navy-deep:#0A2140;
+  --navy-tint:#DCE7F9;
+  --blue2:#1C6FA8;
+  --blue2-tint:#DAEBF6;
+  --accent:#2F8FD1;
+  --accent-deep:#0F5A93;
+  --line:#C6D6EE;
+  --line-soft:#DCE7F7;
+  --white:#FAFCFF;
+  --empty-fill:#F3F8FF;
+  --empty-border:#8FB6E6;
+  --live-green:#1F9D63;
+  --live-green-deep:#0E7A48;
+  --live-green-tint:#DCF5E7;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:linear-gradient(180deg, var(--paper) 0%, #E6EFFB 100%);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+
+/* ---------- reveal animation (bottom -> top) ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .6s cubic-bezier(.16,.84,.44,1), transform .6s cubic-bezier(.16,.84,.44,1);
+}
+.reveal.in{opacity:1;transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
+/* ---------- header ---------- */
+header.top{
+  border-bottom:2px solid var(--navy-deep);
+  padding:36px 0 22px;
+  margin-bottom:22px;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue2);font-weight:600;
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;box-shadow:0 0 0 4px var(--blue2-tint);}
+h1.title{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:clamp(34px,5.4vw,54px);line-height:1.02;
+  margin:0 0 6px;letter-spacing:-.01em;color:var(--navy-deep);
+}
+h1.title em{font-style:italic;font-weight:500;color:var(--blue2);}
+.subtitle{font-size:15px;color:var(--ink-soft);max-width:580px;line-height:1.5;margin-bottom:26px;}
+
+.searchbar{
+  display:flex;align-items:center;gap:10px;
+  background:var(--white);border:1.5px solid var(--navy-deep);
+  border-radius:999px;padding:6px 8px 6px 20px;
+  box-shadow:3px 3px 0 var(--navy-deep);max-width:640px;
+}
+.searchbar svg{flex:0 0 auto;color:var(--blue2);}
+.searchbar input{
+  border:none;outline:none;background:transparent;flex:1;
+  font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);padding:10px 0;
+}
+.searchbar input::placeholder{color:#8FA3C2;}
+.searchbar .clear-btn{
+  border:none;background:var(--paper-2);color:var(--ink-soft);
+  width:28px;height:28px;border-radius:50%;cursor:pointer;
+  display:none;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto;
+}
+.searchbar .clear-btn.show{display:flex;}
+
+/* ---------- controls ---------- */
+.controls{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:16px;margin:16px 0 8px;
+}
+.chip-group{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.02em;
+  padding:8px 14px;border:1.3px solid var(--navy-deep);border-radius:999px;
+  background:var(--white);color:var(--ink);cursor:pointer;
+  transition:transform .12s ease,background .12s ease,color .12s ease;user-select:none;white-space:nowrap;
+}
+.chip:hover{transform:translateY(-1px);}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.chip.active[data-prodi="SI"]{background:var(--blue2);border-color:var(--blue2);}
+.chip.active[data-tag="PRAKTIK"]{background:var(--accent-deep);border-color:var(--accent-deep);}
+.chip.active[data-tag="TEORI"]{background:var(--navy-deep);border-color:var(--navy-deep);}
+.chip.active[data-tag="KOSONG"]{background:var(--white);border-color:var(--empty-border);color:var(--accent-deep);border-style:dashed;}
+
+.view-toggle{display:flex;border:1.3px solid var(--navy-deep);border-radius:999px;overflow:hidden;flex:0 0 auto;}
+.view-toggle button{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.03em;
+  padding:9px 18px;border:none;background:var(--white);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+}
+.view-toggle button.active{background:var(--navy-deep);color:#fff;}
+.view-toggle button:not(:last-child){border-right:1.3px solid var(--navy-deep);}
+
+.room-select-wrap{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
+.room-select-wrap label{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);
+}
+.room-select-wrap select{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink);
+  border:1.3px solid var(--navy-deep);border-radius:999px;padding:8px 14px;background:var(--white);cursor:pointer;
+}
+
+.day-strip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.day-chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.04em;
+  padding:6px 12px;border-radius:6px;border:1.3px dashed var(--line);
+  background:transparent;color:var(--ink-soft);cursor:pointer;text-transform:uppercase;
+}
+.day-chip.active{border-style:solid;border-color:var(--navy);color:var(--navy);background:var(--navy-tint);}
+
+.action-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+.btn-ghost{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.03em;
+  padding:8px 14px;border-radius:999px;border:1.3px solid var(--line);background:var(--white);
+  color:var(--ink-soft);cursor:pointer;
+}
+.btn-ghost:hover{border-color:var(--blue2);color:var(--blue2);}
+.btn-primary{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.03em;
+  padding:8px 16px;border-radius:999px;border:1.3px solid var(--accent-deep);
+  background:var(--accent-deep);color:#fff;cursor:pointer;
+}
+.btn-primary:hover{background:var(--navy-deep);}
+.changed-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.03em;
+  padding:5px 10px;border-radius:6px;background:var(--blue2-tint);color:var(--accent-deep);
+  display:none;
+}
+.changed-badge.show{display:inline-block;}
+
+.result-count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin:2px 2px 18px;letter-spacing:.02em;}
+.result-count b{color:var(--ink);}
+
+/* ---------- TABLE VIEW ---------- */
+#tableView{display:none;}
+.ledger{border-top:2px solid var(--navy-deep);border-bottom:2px solid var(--navy-deep);}
+.ledger-row{
+  display:grid;grid-template-columns: 76px 108px 1fr 92px 96px;gap:14px;
+  padding:14px 6px;border-bottom:1px solid var(--line-soft);align-items:start;
+}
+.ledger-row.head{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-soft);font-weight:600;padding:10px 6px;border-bottom:1.5px solid var(--navy-deep);
+  position:sticky;top:0;background:var(--paper);z-index:5;
+}
+.ledger-row:hover:not(.head){background:var(--white);}
+.ledger-row.kosong-row{background:var(--empty-fill);}
+.cell-day{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--ink-soft);padding-top:2px;}
+.cell-hour{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--navy-deep);white-space:nowrap;}
+.cell-main .subj{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:var(--ink);line-height:1.28;margin-bottom:3px;}
+.cell-main .meta{font-size:12px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px;line-height:1.5;}
+.cell-main .meta .sep{color:var(--line);margin:0 6px;}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.03em;
+  padding:4px 8px;border-radius:5px;height:fit-content;white-space:nowrap;
+}
+.badge.PTI{background:var(--navy-tint);color:var(--navy);}
+.badge.SI{background:var(--blue2-tint);color:var(--blue2);}
+.badge.KOSONG{background:var(--empty-fill);color:var(--accent-deep);border:1px dashed var(--empty-border);}
+.tag-pill{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.03em;
+  padding:4px 8px;border-radius:5px;border:1px solid var(--line);color:var(--ink-soft);
+  height:fit-content;white-space:nowrap;text-transform:uppercase;
+}
+.tag-pill.PRAKTIK{border-color:var(--accent-deep);color:var(--accent-deep);}
+
+.empty-state{text-align:center;padding:70px 20px;color:var(--ink-soft);}
+.empty-state .big{font-family:'Fraunces',serif;font-size:22px;color:var(--ink);margin-bottom:6px;}
+
+/* ---------- GRID VIEW ---------- */
+#gridView{display:none;}
+.class-picker{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;
+  background:var(--white);border:1.5px solid var(--navy-deep);border-radius:14px;padding:16px 18px;
+  box-shadow:3px 3px 0 var(--navy-deep);
+}
+.class-picker label{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);
+}
+.class-picker select{
+  font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--ink);
+  border:1.3px solid var(--navy-deep);border-radius:8px;padding:9px 12px;background:var(--paper);
+  cursor:pointer;flex:1;min-width:180px;
+}
+.class-picker .prodi-note{font-size:12px;color:var(--ink-soft);}
+
+.move-banner{
+  display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:var(--accent-deep);color:#fff;border-radius:10px;padding:12px 16px;margin-bottom:14px;
+}
+.move-banner.show{display:flex;}
+.move-banner .mb-text{font-size:13.5px;font-weight:600;}
+.move-banner .mb-text b{font-family:'Fraunces',serif;}
+.move-banner button{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:700;
+  padding:7px 14px;border-radius:999px;border:1.3px solid #fff;background:transparent;color:#fff;cursor:pointer;
+}
+
+.grid-scroll{overflow-x:auto;border:1.5px solid var(--navy-deep);border-radius:10px;box-shadow:3px 3px 0 var(--navy-deep);}
+.tt-grid{display:grid;grid-template-columns: 64px repeat(6, minmax(140px,1fr));min-width:900px;background:var(--line-soft);gap:1px;}
+.tt-grid .corner{background:var(--navy-deep);}
+.tt-grid .dayhead{
+  background:var(--navy-deep);color:#fff;font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;justify-content:center;padding:12px 4px;
+}
+.tt-grid .timecol{
+  background:var(--paper-2);font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  color:var(--ink-soft);display:flex;align-items:flex-start;justify-content:center;padding-top:8px;
+}
+.tt-grid .slot{background:var(--white);min-height:64px;position:relative;transition:background .15s ease;}
+.tt-grid .slot.empty::before{content:"·";position:absolute;top:6px;left:8px;color:#B9CCE8;font-size:12px;}
+.tt-grid .slot.empty.kosong-highlight{background:var(--empty-fill);}
+.tt-grid .slot.empty.kosong-highlight::before{content:"+ kosong";font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--accent-deep);top:8px;left:8px;letter-spacing:.03em;}
+.tt-grid .slot.drop-target{background:var(--empty-fill);cursor:pointer;box-shadow:inset 0 0 0 2px var(--empty-border);animation:pulseTarget 1.4s ease-in-out infinite;}
+.tt-grid .slot.drop-target::before{content:"↓ taruh di sini";font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--accent-deep);font-weight:700;top:8px;left:8px;letter-spacing:.02em;}
+@keyframes pulseTarget{0%,100%{box-shadow:inset 0 0 0 2px var(--empty-border);}50%{box-shadow:inset 0 0 0 2px var(--accent);}}
+
+.class-card{
+  height:100%;padding:9px 9px 8px;border-left:4px solid var(--navy);
+  display:flex;flex-direction:column;gap:3px;background:var(--navy-tint);cursor:pointer;
+  transition:opacity .15s ease, transform .12s ease, box-shadow .12s ease;
+}
+.class-card:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(10,33,64,.12);}
+.class-card.SI{border-left-color:var(--blue2);background:var(--blue2-tint);}
+.class-card.dim{opacity:.35;}
+.class-card.selected-move{outline:2.5px solid var(--accent-deep);outline-offset:-2px;box-shadow:0 4px 12px rgba(15,90,147,.25);}
+.class-card .cc-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-deep);}
+.class-card .cc-subj{font-family:'Fraunces',serif;font-weight:600;font-size:13px;line-height:1.22;color:var(--ink);}
+.class-card .cc-meta{font-family:'Inter',sans-serif;font-size:10.5px;color:var(--ink-soft);line-height:1.35;}
+.class-card .cc-hint{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--accent-deep);margin-top:2px;opacity:.75;}
+
+/* ---------- LIVE HIGHLIGHT (jadwal sedang berlangsung) ---------- */
+.ledger-row.is-live{
+  background:linear-gradient(90deg, var(--live-green-tint) 0%, var(--white) 65%);
+  box-shadow: inset 4px 0 0 var(--live-green-deep);
+}
+.ledger-row.is-live .cell-hour{color:var(--live-green-deep);}
+.ledger-row.is-live .subj{color:var(--live-green-deep);}
+.class-card.is-live{
+  outline:2.5px solid var(--live-green-deep); outline-offset:-2px;
+  background:var(--live-green-tint);
+  animation:liveCardPulse 1.8s ease-in-out infinite;
+  z-index:2;
+}
+@keyframes liveCardPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(14,122,72,.16);}
+  50%{box-shadow:0 0 0 6px rgba(14,122,72,.28);}
+}
+.live-badge{
+  display:none;align-items:center;gap:5px;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.06em;
+  color:var(--live-green-deep);text-transform:uppercase;white-space:nowrap;
+  background:var(--live-green-tint);padding:2px 8px;border-radius:999px;border:1px solid var(--live-green);
+}
+.live-badge .live-dot{width:6px;height:6px;border-radius:50%;background:var(--live-green-deep);flex:0 0 auto;animation:liveDotPulse 1.2s ease-in-out infinite;}
+@keyframes liveDotPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.8);}}
+.is-live .live-badge{display:inline-flex;}
+.cell-main .subj-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.class-card .cc-tag-row{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+
+/* ---------- MODAL: Tambah Jadwal ---------- */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(10,33,64,.55);
+  align-items:center;justify-content:center;z-index:200;padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal-card{
+  background:var(--white);border:1.5px solid var(--navy-deep);border-radius:14px;
+  box-shadow:6px 6px 0 var(--navy-deep);max-width:480px;width:100%;
+  padding:22px 24px 24px;max-height:88vh;overflow-y:auto;
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.modal-head h2{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--navy-deep);margin:0;}
+.modal-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;}
+.modal-close{border:none;background:var(--paper-2);color:var(--ink-soft);width:30px;height:30px;
+  border-radius:50%;cursor:pointer;font-size:14px;flex:0 0 auto;}
+.form-row{margin-bottom:13px;display:flex;flex-direction:column;gap:6px;}
+.form-row.two-col{flex-direction:row;gap:12px;}
+.form-row.two-col > div{flex:1;display:flex;flex-direction:column;gap:6px;}
+.form-row label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+.form-row input,.form-row select{
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);
+  border:1.3px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--paper);
+}
+.form-row input:focus,.form-row select:focus{outline:none;border-color:var(--accent);}
+.form-hint{font-size:11px;color:var(--ink-soft);margin-top:-4px;}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
+
+footer{
+  margin-top:50px;padding-top:20px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.02em;
+}
+
+@media (max-width:720px){
+  .ledger-row{grid-template-columns: 56px 1fr;row-gap:6px;}
+  .ledger-row.head{display:none;}
+  .cell-hour{grid-column:2;order:1;}
+  .cell-day{order:0;}
+  .cell-main{grid-column:1/-1;order:2;}
+  .cell-badges{grid-column:1/-1;order:3;display:flex;gap:6px;}
+  .controls{flex-direction:column;align-items:stretch;}
+  .view-toggle{align-self:flex-start;}
+}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow reveal"><span class="dot"></span>Teknik Informatika · Semester Ganjil 2026/2027</div>
+    <h1 class="title reveal">Jadwal <em>Kuliah</em></h1>
+    <div class="subtitle reveal">Cari, filter, dan atur ulang jadwal kuliah — lihat slot kosong dan pindahkan sesi yang sudah ada ke jam yang tersedia.</div>
+
+    <div class="searchbar reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" placeholder="Cari kelas, mata kuliah, dosen, atau ruang…" autocomplete="off">
+      <button class="clear-btn" id="clearBtn" aria-label="Hapus pencarian">✕</button>
+    </div>
+  </header>
+
+  <div class="controls reveal">
+    <div class="chip-group" id="prodiChips">
+      <button class="chip active" data-prodi="ALL">Semua Prodi</button>
+      <button class="chip" data-prodi="PTI">PTI</button>
+      <button class="chip" data-prodi="SI">SI</button>
+    </div>
+    <div class="view-toggle">
+      <button id="btnTable" class="active">☰ Tabel</button>
+      <button id="btnGrid">▦ Grid</button>
+    </div>
+  </div>
+
+  <div class="controls reveal" style="margin-top:2px;">
+    <div class="chip-group" id="tagChips">
+      <button class="chip active" data-tag="ALL">Semua Jenis</button>
+      <button class="chip" data-tag="TEORI">Teori</button>
+      <button class="chip" data-tag="PRAKTIK">Praktik</button>
+      <button class="chip" data-tag="KOSONG">Jadwal Kosong</button>
+    </div>
+    <div class="room-select-wrap">
+      <label for="roomSelect">Ruangan</label>
+      <select id="roomSelect"><option value="ALL">Semua Ruangan</option></select>
+    </div>
+  </div>
+
+  <div class="day-strip reveal" id="dayStrip">
+    <button class="day-chip active" data-day="ALL">Semua Hari</button>
+    <button class="day-chip" data-day="SENIN">Senin</button>
+    <button class="day-chip" data-day="SELASA">Selasa</button>
+    <button class="day-chip" data-day="RABU">Rabu</button>
+    <button class="day-chip" data-day="KAMIS">Kamis</button>
+    <button class="day-chip" data-day="JUMAT">Jumat</button>
+    <button class="day-chip" data-day="SABTU">Sabtu</button>
+  </div>
+
+  <div class="action-row reveal">
+    <button class="btn-primary" id="addScheduleBtn">+ Tambah Jadwal</button>
+    <button class="btn-ghost" id="resetBtn">↺ Reset perubahan</button>
+    <button class="btn-ghost" id="downloadBtn">⬇ Unduh Jadwal (CSV)</button>
+    <span class="changed-badge" id="changedBadge">● ada perubahan belum diunduh</span>
+  </div>
+
+  <div class="result-count" id="resultCount"></div>
+
+  <!-- TABLE VIEW -->
+  <div id="tableView">
+    <div class="ledger" id="ledger"></div>
+  </div>
+
+  <!-- GRID VIEW -->
+  <div id="gridView">
+    <div class="class-picker">
+      <label for="classSelect">Pilih Kelas</label>
+      <select id="classSelect"></select>
+      <span class="prodi-note" id="classCount"></span>
+    </div>
+    <div class="move-banner" id="moveBanner">
+      <div class="mb-text" id="moveBannerText"></div>
+      <button id="cancelMoveBtn">Batal</button>
+    </div>
+    <div class="grid-scroll">
+      <div class="tt-grid" id="ttGrid"></div>
+    </div>
+  </div>
+
+  <footer>
+    <span id="footerCount">277 jadwal terdaftar · Teknik Informatika (PTI &amp; SI)</span>
+    <span>Sumber: FET 6.28.6 · Semester Ganjil 2026/2027</span>
+  </footer>
+
+</div>
+
+<!-- MODAL: Tambah Jadwal -->
+<div class="modal-overlay" id="addModalOverlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>Tambah Jadwal</h2>
+      <button class="modal-close" id="modalCloseBtn" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-sub">Isi detail sesi kuliah baru. Perubahan bisa dibatalkan lewat "Reset perubahan".</div>
+    <form id="addForm">
+      <div class="form-row two-col">
+        <div>
+          <label for="fDay">Hari</label>
+          <select id="fDay" required></select>
+        </div>
+        <div>
+          <label for="fTag">Jenis</label>
+          <select id="fTag" required>
+            <option value="TEORI">Teori</option>
+            <option value="PRAKTIK">Praktik</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row two-col">
+        <div>
+          <label for="fStart">Jam Mulai</label>
+          <select id="fStart" required></select>
+        </div>
+        <div>
+          <label for="fEnd">Jam Selesai</label>
+          <select id="fEnd" required></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="fClass">Kelas (Students Sets)</label>
+        <input id="fClass" placeholder="mis. PTI-2026-1-A atau SI-2025-3-B" required>
+        <div class="form-hint">Awali dengan "PTI" atau "SI" agar prodi terdeteksi otomatis.</div>
+      </div>
+      <div class="form-row">
+        <label for="fSubject">Mata Kuliah</label>
+        <input id="fSubject" placeholder="mis. Pemrograman Web PTI" required>
+      </div>
+      <div class="form-row">
+        <label for="fTeacher">Dosen</label>
+        <input id="fTeacher" placeholder="mis. Budi Santoso, S.Kom., M.Kom" required>
+      </div>
+      <div class="form-row">
+        <label for="fRoom">Ruangan</label>
+        <input id="fRoom" list="roomDatalist" placeholder="mis. RK 1.1 atau LAB 1 BASIS DATA" required>
+        <datalist id="roomDatalist"></datalist>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-ghost" id="cancelAddBtn">Batal</button>
+        <button type="submit" class="btn-primary">Simpan Jadwal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const TIMETABLE_DATA = [{"Activity Id": 133, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Photography PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 109, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Interaksi Manusia dan Komputer PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 223, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Terapan SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 189, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 175, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Algoritma dan Struktur Data SI", "Teachers": "Dr.Moh. Hidayat Koniyo, ST., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 182, "Day": "SENIN", "Hour": "08:15-09:45", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Manajemen dan Organisasi SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 101, "Day": "SENIN", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Cloud Computing PTI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 80, "Day": "SENIN", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Microteaching PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 258, "Day": "SENIN", "Hour": "09:45-11:15", "Students Sets": "PTI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Arsitektur Sistem Informasi SI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 68, "Day": "SENIN", "Hour": "09:45-11:15", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Strategi Pembelajaran PTI", "Teachers": "Dr.Jemmy Pakaja, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 36, "Day": "SENIN", "Hour": "09:45-11:15", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Algoritma dan Pemrograman PTI", "Teachers": "Dr.Mukhlisulfatih Latief, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 210, "Day": "SENIN", "Hour": "09:45-11:15", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Komunikasi dan Desain Visual SI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 217, "Day": "SENIN", "Hour": "09:45-11:15", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT3_SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 91, "Day": "SENIN", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Aplikasi Mobile PTI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 117, "Day": "SENIN", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "E-Commerce PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 110, "Day": "SENIN", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Interaksi Manusia dan Komputer PTI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 25, "Day": "SENIN", "Hour": "10:30-12:00", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 98, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Kecerdasan Buatan dan Pembelajaran Adaptif PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 41, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Web Kependidikan PTI", "Teachers": "Dr.Mukhlisulfatih Latief, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 64, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Multimedia Pendidikan  PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 274, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT7_SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 245, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Implementasi & Pengujian Perangkat Lunak SI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 238, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "SI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Data Mining SI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 151, "Day": "SENIN", "Hour": "11:15-12:45", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Agama SI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 129, "Day": "SENIN", "Hour": "12:00-13:30", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Digital Marketing PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 92, "Day": "SENIN", "Hour": "12:00-13:30", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Aplikasi Mobile PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 22, "Day": "SENIN", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi PTI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 9, "Day": "SENIN", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pancasila PTI", "Teachers": "Dr. Ramli Mahmud, S.Pd., MA", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 113, "Day": "SENIN", "Hour": "12:45-14:15", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Internet Of Things PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 5, "Day": "SENIN", "Hour": "12:45-14:15", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Agama PTI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 211, "Day": "SENIN", "Hour": "12:45-14:15", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Komunikasi dan Desain Visual SI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 168, "Day": "SENIN", "Hour": "12:45-14:15", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Logika Matematika SI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 33, "Day": "SENIN", "Hour": "13:30-15:00", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Operasi PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 39, "Day": "SENIN", "Hour": "13:30-15:00", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Algoritma dan Pemrograman PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 276, "Day": "SENIN", "Hour": "13:30-15:00", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Akademik SI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 244, "Day": "SENIN", "Hour": "13:30-15:00", "Students Sets": "SI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web Berbasis Framework SI", "Teachers": "Rahmat Taufik R. L Bau, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 204, "Day": "SENIN", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Matematika Diskrit SI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 130, "Day": "SENIN", "Hour": "14:15-15:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Digital Marketing PTI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 86, "Day": "SENIN", "Hour": "14:15-15:45", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Metodologi Penelitian Pendidikan PTI", "Teachers": "Dr.Arip Mulyanto, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 114, "Day": "SENIN", "Hour": "14:15-15:45", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Internet Of Things PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 218, "Day": "SENIN", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT3_SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 150, "Day": "SENIN", "Hour": "14:15-15:45", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Agama SI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 138, "Day": "SENIN", "Hour": "15:00-16:30", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Manajemen Jaringan Komputer PTI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 19, "Day": "SENIN", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perkembangan Peserta Didik PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 264, "Day": "SENIN", "Hour": "15:00-16:30", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT7_SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 191, "Day": "SENIN", "Hour": "15:00-16:30", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web SI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 143, "Day": "SENIN", "Hour": "15:45-17:15", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Penulisan Karya Ilmiah PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 20, "Day": "SENIN", "Hour": "15:45-17:15", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perkembangan Peserta Didik PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 188, "Day": "SENIN", "Hour": "15:45-17:15", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Budiyanto Ahaliki, S.SI, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 147, "Day": "SENIN", "Hour": "16:30-18:00", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Komunikasi Digital dan Sosial Media PTI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 102, "Day": "SENIN", "Hour": "16:30-18:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Cloud Computing PTI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 156, "Day": "SENIN", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Pancasila SI", "Teachers": "Rajib Gandi Ismail, S.Pd., MH", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 152, "Day": "SENIN", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Agama SI", "Teachers": "KARMILA G. YUSUP, S.Pd., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 139, "Day": "SELASA", "Hour": "08:15-09:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Manajemen Jaringan Komputer PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 57, "Day": "SELASA", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Statistika PTI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 242, "Day": "SELASA", "Hour": "08:15-09:45", "Students Sets": "SI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web Berbasis Framework SI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 203, "Day": "SELASA", "Hour": "08:15-09:45", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Matematika Diskrit SI", "Teachers": "Nisky I. Yahya, S.Pd., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 184, "Day": "SELASA", "Hour": "08:15-09:45", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Manajemen dan Organisasi SI", "Teachers": "Budiyanto Ahaliki, S.SI, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 96, "Day": "SELASA", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Kecerdasan Buatan dan Pembelajaran Adaptif PTI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 107, "Day": "SELASA", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Interaksi Manusia dan Komputer PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 65, "Day": "SELASA", "Hour": "09:00-10:30", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Multimedia Pendidikan  PTI", "Teachers": "Dr.Jemmy Pakaja, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 233, "Day": "SELASA", "Hour": "09:00-10:30", "Students Sets": "SI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT5_SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 146, "Day": "SELASA", "Hour": "09:45-11:15", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Startup Digital PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 35, "Day": "SELASA", "Hour": "09:45-11:15", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Operasi PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 87, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Metodologi Penelitian Pendidikan PTI", "Teachers": "Dr.Mukhlisulfatih Latief, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 7, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pancasila PTI", "Teachers": "Dr. Ramli Mahmud, S.Pd., MA", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 13, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Dasar-Dasar Kependidikan PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 196, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Berorientasi Objek SI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 212, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Komunikasi dan Desain Visual SI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 159, "Day": "SELASA", "Hour": "10:30-12:00", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Pancasila SI", "Teachers": "YAYAN SAHI, S.P.d., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 111, "Day": "SELASA", "Hour": "11:15-12:45", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Internet Of Things PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 108, "Day": "SELASA", "Hour": "11:15-12:45", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Interaksi Manusia dan Komputer PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 170, "Day": "SELASA", "Hour": "11:15-12:45", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Sistem Operasi SI", "Teachers": "Salahudin Olii, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 95, "Day": "SELASA", "Hour": "12:00-13:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Aplikasi Mobile PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 70, "Day": "SELASA", "Hour": "12:00-13:30", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Strategi Pembelajaran PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 40, "Day": "SELASA", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Algoritma dan Pemrograman PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 275, "Day": "SELASA", "Hour": "12:00-13:30", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Akademik SI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 262, "Day": "SELASA", "Hour": "12:00-13:30", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_SI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 122, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_ PTI", "Teachers": "Dosen Bayangan 2", "Activity Tags": "PRAKTIK", "Room": "LAB 6"}, {"Activity Id": 89, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Metodologi Penelitian Pendidikan PTI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 47, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT3_ PTI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 7"}, {"Activity Id": 251, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT5_SI", "Teachers": "Dr.Moh. Hidayat Koniyo, ST., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 239, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "SI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Data Mining SI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 224, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Terapan SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 171, "Day": "SELASA", "Hour": "12:45-14:15", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Sistem Operasi SI", "Teachers": "Salahudin Olii, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 134, "Day": "SELASA", "Hour": "13:30-15:00", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Photography PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 90, "Day": "SELASA", "Hour": "13:30-15:00", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Metodologi Penelitian Pendidikan PTI", "Teachers": "Dr.Jemmy Pakaja, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 2, "Day": "SELASA", "Hour": "13:30-15:00", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Agama PTI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 121, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_ PTI", "Teachers": "Dosen Bayangan 1", "Activity Tags": "PRAKTIK", "Room": "LAB 6"}, {"Activity Id": 46, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT3_ PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 7"}, {"Activity Id": 34, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Operasi PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 30, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Logika Matematika PTI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 240, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web Berbasis Framework SI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 214, "Day": "SELASA", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Komunikasi dan Desain Visual SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 59, "Day": "SELASA", "Hour": "15:00-16:30", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Statistika PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 6, "Day": "SELASA", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pancasila PTI", "Teachers": "Dr. Sastro Wantu, M.Si", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 17, "Day": "SELASA", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perkembangan Peserta Didik PTI", "Teachers": "Prof. Dr. Lukman  Abdul Rauf Laliyo, M.Pd., MM", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 277, "Day": "SELASA", "Hour": "15:00-16:30", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Akademik SI", "Teachers": "Sri Ariyanti Sabiku, M.Pd.", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 163, "Day": "SELASA", "Hour": "15:00-16:30", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi SI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 241, "Day": "SELASA", "Hour": "15:45-17:15", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web Berbasis Framework SI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 177, "Day": "SELASA", "Hour": "15:45-17:15", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Algoritma dan Struktur Data SI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 135, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Broadcasting PTI", "Teachers": "Dr.Jemmy Pakaja, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 12, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Dasar-Dasar Kependidikan PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 249, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "SI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Implementasi & Pengujian Perangkat Lunak SI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 206, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT3_SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 165, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Logika Matematika SI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 161, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi SI", "Teachers": "Dr. Moh. Ramdhan Arif Kaluku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 154, "Day": "SELASA", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Agama SI", "Teachers": "ZULKIFLI KAMUMU, S.Pd.I., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 137, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Broadcasting PTI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 93, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Aplikasi Mobile PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 62, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Multimedia Pendidikan  PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 55, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Analisis dan Desain Sistem Informasi PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 271, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Audit Sistem Informasi SI", "Teachers": "Salahudin Olii, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 226, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT5_SI", "Teachers": "Prof. Lanto Ningrayati Amali, Ph.D", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 222, "Day": "RABU", "Hour": "08:15-09:45", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Terapan SI", "Teachers": "Sri Ariyanti Sabiku, M.Pd.", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 216, "Day": "RABU", "Hour": "09:00-10:30", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT3_SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 145, "Day": "RABU", "Hour": "09:45-11:15", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Startup Digital PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 76, "Day": "RABU", "Hour": "09:45-11:15", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Microteaching PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 94, "Day": "RABU", "Hour": "09:45-11:15", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Aplikasi Mobile PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 21, "Day": "RABU", "Hour": "09:45-11:15", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 202, "Day": "RABU", "Hour": "09:45-11:15", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Matematika Diskrit SI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 112, "Day": "RABU", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Internet Of Things PTI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 209, "Day": "RABU", "Hour": "10:30-12:00", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT3_SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 166, "Day": "RABU", "Hour": "10:30-12:00", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Logika Matematika SI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 75, "Day": "RABU", "Hour": "11:15-12:45", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perencanaan Pembelajaran PTI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 15, "Day": "RABU", "Hour": "11:15-12:45", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Dasar-Dasar Kependidikan PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 225, "Day": "RABU", "Hour": "11:15-12:45", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT5_SI", "Teachers": "Prof. Lanto Ningrayati Amali, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 205, "Day": "RABU", "Hour": "11:15-12:45", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT3_SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 123, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_ PTI", "Teachers": "Dosen Bayangan 3", "Activity Tags": "PRAKTIK", "Room": "LAB 6"}, {"Activity Id": 61, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Multimedia Pendidikan  PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 48, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT3_ PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 7"}, {"Activity Id": 74, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perencanaan Pembelajaran PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 246, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Implementasi & Pengujian Perangkat Lunak SI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 208, "Day": "RABU", "Hour": "12:00-13:30", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT3_SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 144, "Day": "RABU", "Hour": "12:45-14:15", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Startup Digital PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 142, "Day": "RABU", "Hour": "12:45-14:15", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Penulisan Karya Ilmiah PTI", "Teachers": "Dr.Mukhlisulfatih Latief, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 260, "Day": "RABU", "Hour": "12:45-14:15", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_SI", "Teachers": "Dr.Moh. Hidayat Koniyo, ST., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 230, "Day": "RABU", "Hour": "12:45-14:15", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT5_SI", "Teachers": "Prof. Lanto Ningrayati Amali, Ph.D", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 243, "Day": "RABU", "Hour": "12:45-14:15", "Students Sets": "SI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web Berbasis Framework SI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 124, "Day": "RABU", "Hour": "13:30-15:00", "Students Sets": "PTI-2023-7-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_ PTI", "Teachers": "Dosen Bayangan 4", "Activity Tags": "PRAKTIK", "Room": "LAB 6"}, {"Activity Id": 49, "Day": "RABU", "Hour": "13:30-15:00", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT3_ PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 7"}, {"Activity Id": 227, "Day": "RABU", "Hour": "13:30-15:00", "Students Sets": "SI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT5_SI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 141, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Penulisan Karya Ilmiah PTI", "Teachers": "Dr.Arip Mulyanto, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 131, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Digital Marketing PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 27, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Logika Matematika PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 71, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perencanaan Pembelajaran PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 219, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT3_SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 172, "Day": "RABU", "Hour": "14:15-15:45", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Sistem Operasi SI", "Teachers": "Salahudin Olii, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 125, "Day": "RABU", "Hour": "15:00-16:30", "Students Sets": "PTI-2023-7-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_ PTI", "Teachers": "Dosen Bayangan 5", "Activity Tags": "PRAKTIK", "Room": "LAB 6"}, {"Activity Id": 85, "Day": "RABU", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Desain dan Pengembangan Media AR/VR PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 50, "Day": "RABU", "Hour": "15:00-16:30", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Pendukung Keputusan_SMT3_ PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 7"}, {"Activity Id": 178, "Day": "RABU", "Hour": "15:00-16:30", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Algoritma dan Struktur Data SI", "Teachers": "Rahmat Taufik R. L Bau, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 255, "Day": "RABU", "Hour": "15:45-17:15", "Students Sets": "PTI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Arsitektur Sistem Informasi SI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 252, "Day": "RABU", "Hour": "15:45-17:15", "Students Sets": "PTI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT5_SI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 54, "Day": "RABU", "Hour": "15:45-17:15", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Analisis dan Desain Sistem Informasi PTI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 38, "Day": "RABU", "Hour": "15:45-17:15", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Algoritma dan Pemrograman PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 199, "Day": "RABU", "Hour": "15:45-17:15", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Berorientasi Objek SI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 73, "Day": "RABU", "Hour": "16:30-18:00", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perencanaan Pembelajaran PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 26, "Day": "RABU", "Hour": "16:30-18:00", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Logika Matematika PTI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 213, "Day": "RABU", "Hour": "16:30-18:00", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Komunikasi dan Desain Visual SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 180, "Day": "RABU", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Manajemen dan Organisasi SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 51, "Day": "KAMIS", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Analisis dan Desain Sistem Informasi PTI", "Teachers": "Dr.Arip Mulyanto, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 44, "Day": "KAMIS", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Web Kependidikan PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 14, "Day": "KAMIS", "Hour": "08:15-09:45", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Dasar-Dasar Kependidikan PTI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 162, "Day": "KAMIS", "Hour": "08:15-09:45", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi SI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 119, "Day": "KAMIS", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "E-Commerce PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 120, "Day": "KAMIS", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "E-Commerce PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 265, "Day": "KAMIS", "Hour": "09:00-10:30", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT7_SI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 247, "Day": "KAMIS", "Hour": "09:00-10:30", "Students Sets": "SI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Implementasi & Pengujian Perangkat Lunak SI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 78, "Day": "KAMIS", "Hour": "09:45-11:15", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Microteaching PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 63, "Day": "KAMIS", "Hour": "09:45-11:15", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Multimedia Pendidikan  PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 1, "Day": "KAMIS", "Hour": "09:45-11:15", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Agama PTI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 269, "Day": "KAMIS", "Hour": "09:45-11:15", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Audit Sistem Informasi SI", "Teachers": "Prof. Lanto Ningrayati Amali, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 97, "Day": "KAMIS", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Kecerdasan Buatan dan Pembelajaran Adaptif PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 99, "Day": "KAMIS", "Hour": "10:30-12:00", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Kecerdasan Buatan dan Pembelajaran Adaptif PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 237, "Day": "KAMIS", "Hour": "10:30-12:00", "Students Sets": "SI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Data Mining SI", "Teachers": "Rahmat Taufik R. L Bau, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 207, "Day": "KAMIS", "Hour": "10:30-12:00", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT3_SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 127, "Day": "KAMIS", "Hour": "11:15-12:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Animasi 2D dan 3D PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 16, "Day": "KAMIS", "Hour": "11:15-12:45", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perkembangan Peserta Didik PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 155, "Day": "KAMIS", "Hour": "11:15-12:45", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Pancasila SI", "Teachers": "Dr. Ramli Mahmud, S.Pd., MA", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 72, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perencanaan Pembelajaran PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 32, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Operasi PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 3, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Agama PTI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 24, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 185, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 192, "Day": "KAMIS", "Hour": "12:00-13:30", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web SI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 84, "Day": "KAMIS", "Hour": "12:45-14:15", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Desain dan Pengembangan Media AR/VR PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 10, "Day": "KAMIS", "Hour": "12:45-14:15", "Students Sets": "PTI-2026-1-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pancasila PTI", "Teachers": "Dr. Ramli Mahmud, S.Pd., MA", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 231, "Day": "KAMIS", "Hour": "12:45-14:15", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT5_SI", "Teachers": "Prof. Lanto Ningrayati Amali, Ph.D", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 140, "Day": "KAMIS", "Hour": "13:30-15:00", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Manajemen Jaringan Komputer PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 118, "Day": "KAMIS", "Hour": "13:30-15:00", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "E-Commerce PTI", "Teachers": "Eka V. Dangkua, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 270, "Day": "KAMIS", "Hour": "13:30-15:00", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Audit Sistem Informasi SI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 201, "Day": "KAMIS", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Matematika Diskrit SI", "Teachers": "Dr. Emli Rahmi, S.Pd., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 193, "Day": "KAMIS", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web SI", "Teachers": "Rahmat Taufik R. L Bau, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 52, "Day": "KAMIS", "Hour": "14:15-15:45", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Analisis dan Desain Sistem Informasi PTI", "Teachers": "Dr.Arip Mulyanto, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 195, "Day": "KAMIS", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Berorientasi Objek SI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 158, "Day": "KAMIS", "Hour": "14:15-15:45", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Pancasila SI", "Teachers": "YAYAN SAHI, S.P.d., M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 126, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Animasi 2D dan 3D PTI", "Teachers": "Dr.Jemmy Pakaja, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 77, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Microteaching PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 257, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Arsitektur Sistem Informasi SI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 115, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Internet Of Things PTI", "Teachers": "Ihsanulfu'ad Suwandi, S.Pd., M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 37, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Algoritma dan Pemrograman PTI", "Teachers": "Manda Rohandi, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 23, "Day": "KAMIS", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 106, "Day": "KAMIS", "Hour": "15:45-17:15", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Interaksi Manusia dan Komputer PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 66, "Day": "KAMIS", "Hour": "15:45-17:15", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Strategi Pembelajaran PTI", "Teachers": "Dr.Arip Mulyanto, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 197, "Day": "KAMIS", "Hour": "15:45-17:15", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Berorientasi Objek SI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 83, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Desain dan Pengembangan Media AR/VR PTI", "Teachers": "Arif Dwinanto, S.SI, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 100, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Kecerdasan Buatan dan Pembelajaran Adaptif PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 31, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Sistem Operasi PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 235, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Data Mining SI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 215, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT3_SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 157, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Pancasila SI", "Teachers": "Rajib Gandi Ismail, S.Pd., MH", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 153, "Day": "KAMIS", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Agama SI", "Teachers": "KARMILA G. YUSUP, S.Pd., M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 79, "Day": "JUMAT", "Hour": "08:15-09:45", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Microteaching PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 60, "Day": "JUMAT", "Hour": "08:15-09:45", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Statistika PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 28, "Day": "JUMAT", "Hour": "08:15-09:45", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Logika Matematika PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 250, "Day": "JUMAT", "Hour": "08:15-09:45", "Students Sets": "SI-2024-5-A", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT5_SI", "Teachers": "Dr.Moh. Hidayat Koniyo, ST., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 176, "Day": "JUMAT", "Hour": "08:15-09:45", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Algoritma dan Struktur Data SI", "Teachers": "Rahmat Taufik R. L Bau, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 81, "Day": "JUMAT", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Desain dan Pengembangan Media AR/VR PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 254, "Day": "JUMAT", "Hour": "09:00-10:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT5_SI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 183, "Day": "JUMAT", "Hour": "09:00-10:30", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Manajemen dan Organisasi SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 174, "Day": "JUMAT", "Hour": "09:00-10:30", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Sistem Operasi SI", "Teachers": "Zulhair Jidan Dj. Tamu, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 45, "Day": "JUMAT", "Hour": "09:45-11:15", "Students Sets": "PTI-2025-3-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Web Kependidikan PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 232, "Day": "JUMAT", "Hour": "09:45-11:15", "Students Sets": "SI-2024-5-C", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT5_SI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 67, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Strategi Pembelajaran PTI", "Teachers": "Prof. Dr. Lukman  Abdul Rauf Laliyo, M.Pd., MM", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 18, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Perkembangan Peserta Didik PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 272, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT7_SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 273, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT7_SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 248, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "SI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Implementasi & Pengujian Perangkat Lunak SI", "Teachers": "Rahman Takdir, S.Kom., M.Cs", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 169, "Day": "JUMAT", "Hour": "10:30-12:00", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Logika Matematika SI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 69, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "PTI-2025-3-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Strategi Pembelajaran PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 8, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "PTI-2026-1-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pancasila PTI", "Teachers": "Dr. Sastro Wantu, M.Si", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 263, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT7_SI", "Teachers": "Tajuddin Abdillah, S.Kom., M.Cs", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 261, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT7_SI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 190, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web SI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 186, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 187, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2025-3-C", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 179, "Day": "JUMAT", "Hour": "13:30-15:00", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Algoritma dan Struktur Data SI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 198, "Day": "JUMAT", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-D", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Berorientasi Objek SI", "Teachers": "Muchlis Polin, S.Kom, M.Com", "Activity Tags": "PRAKTIK", "Room": "LAB 3 PEMROGRAMAN LANJUTAN"}, {"Activity Id": 149, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Komunikasi Digital dan Sosial Media PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 256, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Arsitektur Sistem Informasi SI", "Teachers": "Dr. Mohammad Syafri Tuloli. MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 105, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2024-5-E", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Cloud Computing PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 56, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2025-3-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Statistika PTI", "Teachers": "Muhammad Rifai Katili, Ph.D", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 11, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Dasar-Dasar Kependidikan PTI", "Teachers": "Dr.Mukhlisulfatih Latief, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 4, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Agama PTI", "Teachers": "Dr.Hj. Nurhayati Tine, S.PdI, M.Hi", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 194, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "SI-2025-3-E", "PRODI": "Sistem Informasi", "Subject": "Pemrograman Web SI", "Teachers": "Zulhair Jidan Dj. Tamu, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 167, "Day": "JUMAT", "Hour": "15:00-16:30", "Students Sets": "SI-2026-1-C", "PRODI": "Sistem Informasi", "Subject": "Logika Matematika SI", "Teachers": "Indhitya R Padiku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 132, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "PTI-2023-7-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Photography PTI", "Teachers": "Abd. Aziz Bouty, S.Kom., M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 82, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "PTI-2024-5-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Desain dan Pengembangan Media AR/VR PTI", "Teachers": "Bait Syaiful Rijal, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 253, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "PTI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Sistem Pendukung Keputusan_SMT5_SI", "Teachers": "Dr. Moh. Ramdhan Arif Kaluku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 43, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Web Kependidikan PTI", "Teachers": "Ahmad Azhar Kadim, S.Kom., M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 29, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "PTI-2026-1-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Logika Matematika PTI", "Teachers": "Muthia, S.SI, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 236, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "SI-2024-5-B", "PRODI": "Sistem Informasi", "Subject": "Data Mining SI", "Teachers": "Nikmasari Pakaya, S.Kom, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 2 PEMROGRAMAN DASAR"}, {"Activity Id": 229, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "SI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT5_SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 221, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "SI-2025-3-B", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Terapan SI", "Teachers": "Sri Ariyanti Sabiku, M.Pd.", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 173, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-D", "PRODI": "Sistem Informasi", "Subject": "Sistem Operasi SI", "Teachers": "Hanifah Mardlatillah, M.Kom", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 164, "Day": "JUMAT", "Hour": "16:30-18:00", "Students Sets": "SI-2026-1-E", "PRODI": "Sistem Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi SI", "Teachers": "Budiyanto Ahaliki, S.SI, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 136, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Broadcasting PTI", "Teachers": "Hermila A, S.SI.,M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 128, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "PTI-2023-7-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Animasi 2D dan 3D PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 5 MULTIMEDIA"}, {"Activity Id": 88, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Metodologi Penelitian Pendidikan PTI", "Teachers": "Dr.Dian Novian, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 268, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "SI-2023-7-H", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 200, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Matematika Diskrit SI", "Teachers": "Dr. Hasan S. Panigoro, S.Pd., M.Si.", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 160, "Day": "SABTU", "Hour": "11:15-12:45", "Students Sets": "SI-2026-1-A", "PRODI": "Sistem Informasi", "Subject": "Pengantar Teknologi dan Sistem Informasi SI", "Teachers": "Dr. Moh. Ramdhan Arif Kaluku, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 116, "Day": "SABTU", "Hour": "12:00-13:30", "Students Sets": "PTI-2024-5-A", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "E-Commerce PTI", "Teachers": "Rampi Yusuf, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 103, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "PTI-2024-5-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Cloud Computing PTI", "Teachers": "Sri Ayu Ashari, S.SI.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 259, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "PTI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Arsitektur Sistem Informasi SI", "Teachers": "Zulhair Jidan Dj. Tamu, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.1"}, {"Activity Id": 42, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "PTI-2025-3-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Pemrograman Web Kependidikan PTI", "Teachers": "Alfian Zakaria, S.SI, MT", "Activity Tags": "PRAKTIK", "Room": "LAB 1 BASIS DATA"}, {"Activity Id": 58, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Statistika PTI", "Teachers": "Lillyan Hadjaratie, S.Kom., M.Si", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 266, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "SI-2023-7-F", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Salahudin Olii, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 267, "Day": "SABTU", "Hour": "12:45-14:15", "Students Sets": "SI-2023-7-G", "PRODI": "Sistem Informasi", "Subject": "Literasi Digital SI", "Teachers": "Budiyanto Ahaliki, S.SI, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 234, "Day": "SABTU", "Hour": "13:30-15:00", "Students Sets": "SI-2024-5-E", "PRODI": "Sistem Informasi", "Subject": "Etika Profesi_SMT5_SI", "Teachers": "Sri Nilawaty Lahay, S.Kom, M.Kom", "Activity Tags": "TEORI", "Room": "MTC"}, {"Activity Id": 181, "Day": "SABTU", "Hour": "13:30-15:00", "Students Sets": "SI-2026-1-B", "PRODI": "Sistem Informasi", "Subject": "Manajemen dan Organisasi SI", "Teachers": "Roviana H. Dai, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.3"}, {"Activity Id": 148, "Day": "SABTU", "Hour": "14:15-15:45", "Students Sets": "PTI-2023-7-B", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Komunikasi Digital dan Sosial Media PTI", "Teachers": "Haeriani, M.Pd", "Activity Tags": "TEORI", "Room": "RK 1.2"}, {"Activity Id": 104, "Day": "SABTU", "Hour": "14:15-15:45", "Students Sets": "PTI-2024-5-D", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Cloud Computing PTI", "Teachers": "Huzaima Mas'ud, S.Pd.,M.Pd", "Activity Tags": "PRAKTIK", "Room": "LAB 4 JARINGAN KOMPUTER"}, {"Activity Id": 53, "Day": "SABTU", "Hour": "14:15-15:45", "Students Sets": "PTI-2025-3-C", "PRODI": "Pendidikan Teknologi Informasi", "Subject": "Analisis dan Desain Sistem Informasi PTI", "Teachers": "Sitti Suhada, S.Kom., MT", "Activity Tags": "TEORI", "Room": "RK 1.5"}, {"Activity Id": 228, "Day": "SABTU", "Hour": "14:15-15:45", "Students Sets": "SI-2024-5-D", "PRODI": "Sistem Informasi", "Subject": "Interaksi Manusia dan Komputer_SMT5_SI", "Teachers": "Budiyanto Ahaliki, S.SI, M.Kom", "Activity Tags": "TEORI", "Room": "RK 1.4"}, {"Activity Id": 220, "Day": "SABTU", "Hour": "14:15-15:45", "Students Sets": "SI-2025-3-A", "PRODI": "Sistem Informasi", "Subject": "Bahasa Inggris Terapan SI", "Teachers": "Farid Muhamad, S.Pd, M.A", "Activity Tags": "TEORI", "Room": "RK 1.1"}];
+</script>
+<script>
+(function(){
+  "use strict";
+
+  const DAY_ORDER = ["SENIN","SELASA","RABU","KAMIS","JUMAT","SABTU"];
+  const DAY_LABEL = {SENIN:"Senin",SELASA:"Selasa",RABU:"Rabu",KAMIS:"Kamis",JUMAT:"Jumat",SABTU:"Sabtu"};
+  const SLOTS = ["08:15","09:00","09:45","10:30","11:15","12:00","12:45","13:30","14:15","15:00","15:45","16:30","17:15","18:00","18:45"];
+  const SLOT_COUNT = SLOTS.length - 1;
+
+  function prodiCode(row){
+    return row["Students Sets"].startsWith("SI") ? "SI" : "PTI";
+  }
+
+  function deriveRow(r){
+    const [start, end] = r.Hour.split("-");
+    return Object.assign({}, r, {
+      _start: start,
+      _end: end,
+      _dayIdx: DAY_ORDER.indexOf(r.Day),
+      _classProdi: prodiCode(r)
+    });
+  }
+
+  const MASTER_DATA = TIMETABLE_DATA.map(deriveRow);
+  let DATA = MASTER_DATA.map(r => Object.assign({}, r)); // working (mutable) copy
+  let dirty = false;
+
+  const ALL_CLASSES = Array.from(new Set(MASTER_DATA.map(r => r["Students Sets"]))).sort();
+  const ALL_ROOMS = Array.from(new Set(MASTER_DATA.map(r => r.Room))).sort();
+
+  function sortData(){
+    DATA.sort((a,b) => a._dayIdx - b._dayIdx || a._start.localeCompare(b._start) || a["Students Sets"].localeCompare(b["Students Sets"]));
+  }
+  sortData();
+
+  // ---------------- state ----------------
+  const state = {
+    query: "",
+    prodi: "ALL",
+    day: "ALL",
+    tag: "ALL",
+    room: "ALL",
+    view: "table",
+    selectedClass: ALL_CLASSES[0]
+  };
+  let moveModeRow = null; // Activity Id currently being relocated
+
+  // ---------------- elements ----------------
+  const searchInput = document.getElementById("searchInput");
+  const clearBtn = document.getElementById("clearBtn");
+  const prodiChips = document.getElementById("prodiChips");
+  const tagChips = document.getElementById("tagChips");
+  const roomSelect = document.getElementById("roomSelect");
+  const dayStrip = document.getElementById("dayStrip");
+  const btnTable = document.getElementById("btnTable");
+  const btnGrid = document.getElementById("btnGrid");
+  const tableView = document.getElementById("tableView");
+  const gridView = document.getElementById("gridView");
+  const ledger = document.getElementById("ledger");
+  const resultCount = document.getElementById("resultCount");
+  const classSelect = document.getElementById("classSelect");
+  const classCount = document.getElementById("classCount");
+  const ttGrid = document.getElementById("ttGrid");
+  const moveBanner = document.getElementById("moveBanner");
+  const moveBannerText = document.getElementById("moveBannerText");
+  const cancelMoveBtn = document.getElementById("cancelMoveBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const changedBadge = document.getElementById("changedBadge");
+  const footerCount = document.getElementById("footerCount");
+  const addScheduleBtn = document.getElementById("addScheduleBtn");
+  const addModalOverlay = document.getElementById("addModalOverlay");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const cancelAddBtn = document.getElementById("cancelAddBtn");
+  const addForm = document.getElementById("addForm");
+  const fDay = document.getElementById("fDay");
+  const fStart = document.getElementById("fStart");
+  const fEnd = document.getElementById("fEnd");
+  const fClass = document.getElementById("fClass");
+  const fSubject = document.getElementById("fSubject");
+  const fTeacher = document.getElementById("fTeacher");
+  const fTag = document.getElementById("fTag");
+  const fRoom = document.getElementById("fRoom");
+  const roomDatalist = document.getElementById("roomDatalist");
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+  }
+
+  function markDirty(v){
+    dirty = v;
+    changedBadge.classList.toggle("show", dirty);
+  }
+
+  // ---------------- filtering ----------------
+  function matchesQuery(row, q){
+    if(!q) return true;
+    const hay = [row.Subject, row.Teachers, row.Room, row["Students Sets"], row.Day, row["Activity Tags"], row.PRODI]
+      .join(" ").toLowerCase();
+    return hay.includes(q);
+  }
+
+  function baseFilter(r){
+    return (state.prodi === "ALL" || r._classProdi === state.prodi) &&
+           (state.day === "ALL" || r.Day === state.day) &&
+           (state.tag === "ALL" || state.tag === "KOSONG" || r["Activity Tags"] === state.tag) &&
+           (state.room === "ALL" || r.Room === state.room);
+  }
+
+  function filteredRows(){
+    const q = state.query.trim().toLowerCase();
+    return DATA.filter(r => baseFilter(r) && matchesQuery(r, q));
+  }
+
+  // build a Day->slotIdx->row-or-'occupied' occupancy map, scoped by a predicate over rows
+  function buildOccupancy(filterFn){
+    const occ = {};
+    DAY_ORDER.forEach((d,di) => { occ[di] = new Array(SLOT_COUNT).fill(null); });
+    DATA.forEach(r => {
+      if(filterFn && !filterFn(r)) return;
+      const di = r._dayIdx;
+      const startIdx = SLOTS.indexOf(r._start);
+      const endIdx = SLOTS.indexOf(r._end);
+      if(startIdx === -1 || endIdx === -1) return;
+      occ[di][startIdx] = {row:r, span: endIdx-startIdx};
+      for(let k=startIdx+1;k<endIdx;k++){ occ[di][k] = "occupied"; }
+    });
+    return occ;
+  }
+
+  // ---------------- TABLE: normal ledger ----------------
+  function renderNormalLedger(rows){
+    let html = `<div class="ledger-row head">
+      <div>Hari</div><div>Jam</div><div>Mata Kuliah</div><div>Prodi</div><div>Tag</div>
+    </div>`;
+    rows.forEach((r, i) => {
+      html += `
+      <div class="ledger-row reveal" style="transition-delay:${Math.min(i*22,300)}ms" data-live-day="${r.Day}" data-live-start="${r._start}" data-live-end="${r._end}">
+        <div class="cell-day">${DAY_LABEL[r.Day]}</div>
+        <div class="cell-hour">${r.Hour}</div>
+        <div class="cell-main">
+          <div class="subj-row">
+            <div class="subj">${escapeHtml(r.Subject)}</div>
+            <span class="live-badge"><span class="live-dot"></span>Sedang berlangsung</span>
+          </div>
+          <div class="meta">
+            <span>${escapeHtml(r["Students Sets"])}</span><span class="sep">·</span>
+            <span>${escapeHtml(r.Teachers)}</span><span class="sep">·</span>
+            <span>${escapeHtml(r.Room)}</span>
+          </div>
+        </div>
+        <div class="cell-badges"><span class="badge ${r._classProdi}">${r._classProdi}</span></div>
+        <div><span class="tag-pill ${escapeHtml(r["Activity Tags"])}">${escapeHtml(r["Activity Tags"])}</span></div>
+      </div>`;
+    });
+    ledger.innerHTML = html;
+    runReveal(ledger);
+  }
+
+  // ---------------- TABLE: empty-slot browser (per room) ----------------
+  function renderKosongLedger(){
+    if(state.room === "ALL"){
+      ledger.innerHTML = `<div class="empty-state"><div class="big">Pilih ruangan dulu</div>
+        Gunakan dropdown <b>Ruangan</b> di atas untuk melihat jam-jam kosong di ruang tertentu.</div>`;
+      resultCount.innerHTML = `Pilih ruangan untuk melihat slot kosong`;
+      return;
+    }
+    const occ = buildOccupancy(r => r.Room === state.room);
+    const q = state.query.trim().toLowerCase();
+    const emptySlots = [];
+    DAY_ORDER.forEach((d, di) => {
+      if(state.day !== "ALL" && d !== state.day) return;
+      for(let s=0; s<SLOT_COUNT; s++){
+        if(occ[di][s] === null){
+          if(q && !d.toLowerCase().includes(q) && !state.room.toLowerCase().includes(q)) continue;
+          emptySlots.push({day:d, dayIdx:di, start:SLOTS[s], end:SLOTS[s+1]});
+        }
+      }
+    });
+
+    resultCount.innerHTML = `<b>${emptySlots.length}</b> slot kosong di <b>${escapeHtml(state.room)}</b>`;
+
+    if(emptySlots.length === 0){
+      ledger.innerHTML = `<div class="empty-state"><div class="big">Penuh</div>Tidak ada slot kosong untuk filter saat ini.</div>`;
+      return;
+    }
+
+    let html = `<div class="ledger-row head">
+      <div>Hari</div><div>Jam</div><div>Status</div><div>Prodi</div><div>Tag</div>
+    </div>`;
+    emptySlots.forEach((r,i) => {
+      html += `
+      <div class="ledger-row kosong-row reveal" style="transition-delay:${Math.min(i*20,300)}ms">
+        <div class="cell-day">${DAY_LABEL[r.day]}</div>
+        <div class="cell-hour">${r.start}-${r.end}</div>
+        <div class="cell-main"><div class="subj" style="color:var(--accent-deep);">Tersedia — ${escapeHtml(state.room)}</div></div>
+        <div class="cell-badges"><span class="badge KOSONG">KOSONG</span></div>
+        <div></div>
+      </div>`;
+    });
+    ledger.innerHTML = html;
+    runReveal(ledger);
+  }
+
+  function renderTable(){
+    if(state.tag === "KOSONG"){
+      renderKosongLedger();
+      return;
+    }
+    const rows = filteredRows();
+    resultCount.innerHTML = `<b>${rows.length}</b> dari ${DATA.length} jadwal ditampilkan`;
+    if(rows.length === 0){
+      ledger.innerHTML = `<div class="empty-state"><div class="big">Tidak ditemukan</div>Coba kata kunci lain, atau reset filter.</div>`;
+      return;
+    }
+    renderNormalLedger(rows);
+  }
+
+  // ---------------- GRID VIEW ----------------
+  function populateClassSelect(){
+    const q = state.query.trim().toLowerCase();
+    let classes = ALL_CLASSES.filter(c => {
+      const prodi = c.startsWith("SI") ? "SI" : "PTI";
+      if(state.prodi !== "ALL" && prodi !== state.prodi) return false;
+      return DATA.some(r =>
+        r["Students Sets"] === c &&
+        (state.tag === "ALL" || state.tag === "KOSONG" || r["Activity Tags"] === state.tag) &&
+        (state.room === "ALL" || r.Room === state.room) &&
+        (!q || c.toLowerCase().includes(q) || matchesQuery(r, q))
+      );
+    });
+    if(classes.length === 0) classes = ALL_CLASSES;
+    if(!classes.includes(state.selectedClass)) state.selectedClass = classes[0];
+    classSelect.innerHTML = classes.map(c => `<option value="${c}" ${c===state.selectedClass?"selected":""}>${c}</option>`).join("");
+    classCount.textContent = `${classes.length} kelas tersedia`;
+  }
+
+  function updateMoveBanner(){
+    if(moveModeRow){
+      moveBanner.classList.add("show");
+      moveBannerText.innerHTML = `Memindahkan <b>${escapeHtml(moveModeRow.Subject)}</b> — klik slot kosong tujuan`;
+    } else {
+      moveBanner.classList.remove("show");
+    }
+  }
+
+  function findRowByActivityId(id){
+    return DATA.find(r => r["Activity Id"] === id);
+  }
+
+  function canPlace(dayIdx, startSlot, span, excludeActivityId, classCode){
+    if(startSlot + span > SLOT_COUNT) return false;
+    const occ = buildOccupancy(r => r["Students Sets"] === classCode);
+    for(let k=startSlot; k<startSlot+span; k++){
+      const cell = occ[dayIdx][k];
+      if(cell === null) continue;
+      if(cell === "occupied") return false;
+      if(cell.row && cell.row["Activity Id"] !== excludeActivityId) return false;
+    }
+    return true;
+  }
+
+  function performMove(row, targetDayIdx, targetSlotIdx){
+    const startIdx = SLOTS.indexOf(row._start);
+    const endIdx = SLOTS.indexOf(row._end);
+    const span = endIdx - startIdx;
+
+    // soft conflict check: is target room already used by another class at this time?
+    const conflict = DATA.find(r =>
+      r["Activity Id"] !== row["Activity Id"] &&
+      r.Room === row.Room &&
+      DAY_ORDER[targetDayIdx] === r.Day &&
+      !(SLOTS.indexOf(r._end) <= targetSlotIdx || SLOTS.indexOf(r._start) >= targetSlotIdx+span)
+    );
+    if(conflict){
+      const ok = confirm(`Ruang ${row.Room} pada slot itu sudah dipakai oleh "${conflict.Subject}" (${conflict["Students Sets"]}). Tetap pindahkan?`);
+      if(!ok) return false;
+    }
+
+    const newDay = DAY_ORDER[targetDayIdx];
+    const newStart = SLOTS[targetSlotIdx];
+    const newEnd = SLOTS[targetSlotIdx+span];
+    const idx = DATA.findIndex(r => r["Activity Id"] === row["Activity Id"]);
+    DATA[idx] = deriveRow(Object.assign({}, DATA[idx], {
+      Day: newDay,
+      Hour: `${newStart}-${newEnd}`
+    }));
+    sortData();
+    markDirty(true);
+    return true;
+  }
+
+  // ---------------- ADD SCHEDULE ----------------
+  function fillTimeOptions(sel, opts){
+    sel.innerHTML = opts.map(t => `<option value="${t}">${t}</option>`).join("");
+  }
+  function populateAddFormOptions(){
+    fDay.innerHTML = DAY_ORDER.map(d => `<option value="${d}">${DAY_LABEL[d]}</option>`).join("");
+    fillTimeOptions(fStart, SLOTS.slice(0, SLOT_COUNT));
+    fillTimeOptions(fEnd, SLOTS.slice(1));
+    fEnd.value = SLOTS[2]; // default 1.5 jam
+    roomDatalist.innerHTML = ALL_ROOMS.map(r => `<option value="${escapeHtml(r)}">`).join("");
+  }
+  function openAddModal(){
+    addForm.reset();
+    populateAddFormOptions();
+    addModalOverlay.classList.add("show");
+    setTimeout(() => fClass.focus(), 50);
+  }
+  function closeAddModal(){
+    addModalOverlay.classList.remove("show");
+  }
+
+  function addScheduleRow({Day, Hour, StudentsSets, Subject, Teachers, Tag, Room}){
+    const newId = DATA.reduce((m, r) => Math.max(m, r["Activity Id"]), 0) + 1;
+    const prodiFull = StudentsSets.toUpperCase().startsWith("SI")
+      ? "Sistem Informasi" : "Pendidikan Teknologi Informasi";
+    const raw = {
+      "Activity Id": newId, Day, Hour, "Students Sets": StudentsSets,
+      PRODI: prodiFull, Subject, Teachers, "Activity Tags": Tag, Room
+    };
+    const row = deriveRow(raw);
+    DATA.push(row);
+    sortData();
+    if(!ALL_CLASSES.includes(row["Students Sets"])){
+      ALL_CLASSES.push(row["Students Sets"]);
+      ALL_CLASSES.sort();
+    }
+    if(!ALL_ROOMS.includes(row.Room)){
+      ALL_ROOMS.push(row.Room);
+      ALL_ROOMS.sort();
+      const opt = document.createElement("option");
+      opt.value = row.Room; opt.textContent = row.Room;
+      roomSelect.appendChild(opt);
+    }
+    markDirty(true);
+    footerCount.textContent = `${DATA.length} jadwal terdaftar · Teknik Informatika (PTI & SI)`;
+    return row;
+  }
+
+  addScheduleBtn.addEventListener("click", openAddModal);
+  modalCloseBtn.addEventListener("click", closeAddModal);
+  cancelAddBtn.addEventListener("click", closeAddModal);
+  addModalOverlay.addEventListener("click", (e) => { if(e.target === addModalOverlay) closeAddModal(); });
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && addModalOverlay.classList.contains("show")) closeAddModal();
+  });
+
+  addForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const day = fDay.value;
+    const start = fStart.value;
+    const end = fEnd.value;
+    const startIdx = SLOTS.indexOf(start);
+    const endIdx = SLOTS.indexOf(end);
+    if(startIdx === -1 || endIdx === -1 || startIdx >= endIdx){
+      alert("Jam selesai harus setelah jam mulai.");
+      return;
+    }
+    const cls = fClass.value.trim().toUpperCase();
+    const subject = fSubject.value.trim();
+    const teacher = fTeacher.value.trim();
+    const room = fRoom.value.trim();
+    if(!cls || !subject || !teacher || !room) return;
+
+    // cek bentrok kelas (kelas yang sama sudah punya jadwal di jam ini)
+    const classConflict = DATA.find(r =>
+      r["Students Sets"] === cls && r.Day === day &&
+      !(SLOTS.indexOf(r._end) <= startIdx || SLOTS.indexOf(r._start) >= endIdx)
+    );
+    if(classConflict){
+      const ok = confirm(`Kelas ${cls} sudah memiliki jadwal "${classConflict.Subject}" pada slot ini. Tetap tambahkan?`);
+      if(!ok) return;
+    }
+    // cek bentrok ruangan
+    const roomConflict = DATA.find(r =>
+      r.Room === room && r.Day === day &&
+      !(SLOTS.indexOf(r._end) <= startIdx || SLOTS.indexOf(r._start) >= endIdx)
+    );
+    if(roomConflict){
+      const ok = confirm(`Ruang ${room} sudah dipakai oleh "${roomConflict.Subject}" (${roomConflict["Students Sets"]}) pada slot ini. Tetap tambahkan?`);
+      if(!ok) return;
+    }
+
+    addScheduleRow({
+      Day: day, Hour: `${start}-${end}`, StudentsSets: cls,
+      Subject: subject, Teachers: teacher, Tag: fTag.value, Room: room
+    });
+    state.selectedClass = cls;
+    closeAddModal();
+    render();
+  });
+
+  function renderGrid(){
+    populateClassSelect();
+    const cls = state.selectedClass;
+    const rows = DATA.filter(r =>
+      r["Students Sets"] === cls &&
+      (state.tag === "ALL" || state.tag === "KOSONG" || r["Activity Tags"] === state.tag) &&
+      (state.room === "ALL" || r.Room === state.room)
+    );
+
+    const grid = {};
+    DAY_ORDER.forEach((d,di) => { grid[di] = new Array(SLOT_COUNT).fill(null); });
+    rows.forEach(r => {
+      const di = r._dayIdx;
+      const startIdx = SLOTS.indexOf(r._start);
+      const endIdx = SLOTS.indexOf(r._end);
+      if(startIdx === -1 || endIdx === -1) return;
+      const span = endIdx-startIdx;
+      grid[di][startIdx] = {row:r, span};
+      for(let k=startIdx+1;k<endIdx;k++){ grid[di][k] = "occupied"; }
+    });
+
+    // determine which activity id is the move source (for span lookup)
+    const moveRowLive = moveModeRow ? findRowByActivityId(moveModeRow["Activity Id"]) : null;
+    const moveSpan = moveRowLive ? (SLOTS.indexOf(moveRowLive._end) - SLOTS.indexOf(moveRowLive._start)) : 0;
+
+    let html = `<div class="corner"></div>`;
+    DAY_ORDER.forEach(d => { html += `<div class="dayhead">${DAY_LABEL[d]}</div>`; });
+
+    for(let s=0; s<SLOT_COUNT; s++){
+      html += `<div class="timecol">${SLOTS[s]}</div>`;
+      DAY_ORDER.forEach((d, di) => {
+        const cell = grid[di][s];
+        if(cell === "occupied") return;
+
+        if(cell === null){
+          let cls2 = "slot empty";
+          let clickAttr = "";
+          if(moveRowLive && canPlace(di, s, moveSpan, moveRowLive["Activity Id"], moveRowLive["Students Sets"])){
+            cls2 += " drop-target";
+            clickAttr = ` data-drop-day="${di}" data-drop-slot="${s}"`;
+          } else if(state.tag === "KOSONG"){
+            cls2 += " kosong-highlight";
+          }
+          html += `<div class="${cls2}"${clickAttr} style="grid-row: span 1;"></div>`;
+        } else {
+          const r = cell.row;
+          const prodi = r._classProdi;
+          const isSelected = moveModeRow && moveModeRow["Activity Id"] === r["Activity Id"];
+          const isDim = moveModeRow && !isSelected;
+          const kosongDim = (state.tag === "KOSONG") ? " dim" : "";
+          html += `<div class="slot" style="grid-row: span ${cell.span};">
+            <div class="class-card ${prodi}${isSelected?" selected-move":""}${isDim?" dim":""}${!moveModeRow?kosongDim:""}" data-activity-id="${r["Activity Id"]}" data-live-day="${r.Day}" data-live-start="${r._start}" data-live-end="${r._end}">
+              <div class="cc-tag-row">
+                <div class="cc-tag">${escapeHtml(r["Activity Tags"])}</div>
+                <span class="live-badge"><span class="live-dot"></span>Live</span>
+              </div>
+              <div class="cc-subj">${escapeHtml(r.Subject)}</div>
+              <div class="cc-meta">${escapeHtml(r.Teachers)}<br>${escapeHtml(r.Room)}</div>
+              <div class="cc-hint">${isSelected ? "✓ dipilih — klik slot kosong" : "klik untuk pindahkan"}</div>
+            </div>
+          </div>`;
+        }
+      });
+    }
+    ttGrid.innerHTML = html;
+    updateMoveBanner();
+
+    const shown = rows.length;
+    const filterNote = (state.tag !== "ALL" || state.room !== "ALL") ? ` <span style="opacity:.7">(filter aktif)</span>` : "";
+    resultCount.innerHTML = `<b>${shown}</b> sesi terjadwal untuk kelas <b>${cls}</b>${filterNote}`;
+  }
+
+  ttGrid.addEventListener("click", (e) => {
+    const card = e.target.closest(".class-card");
+    if(card){
+      const id = Number(card.dataset.activityId);
+      const row = findRowByActivityId(id);
+      if(!row) return;
+      moveModeRow = (moveModeRow && moveModeRow["Activity Id"] === id) ? null : row;
+      renderGrid();
+      return;
+    }
+    const target = e.target.closest(".drop-target");
+    if(target && moveModeRow){
+      const di = Number(target.dataset.dropDay);
+      const s = Number(target.dataset.dropSlot);
+      const row = findRowByActivityId(moveModeRow["Activity Id"]);
+      if(row && performMove(row, di, s)){
+        moveModeRow = null;
+        renderGrid();
+        renderTable(); // keep table in sync even though hidden
+      }
+    }
+  });
+
+  cancelMoveBtn.addEventListener("click", () => { moveModeRow = null; renderGrid(); });
+
+  // ---------------- reset / export ----------------
+  resetBtn.addEventListener("click", () => {
+    if(!dirty) return;
+    if(!confirm("Kembalikan semua jadwal ke posisi asal? Jadwal yang ditambahkan juga akan dihapus.")) return;
+    DATA = MASTER_DATA.map(r => Object.assign({}, r));
+    sortData();
+
+    // kembalikan daftar kelas & ruangan ke kondisi asal (hapus tambahan baru)
+    const origClasses = Array.from(new Set(MASTER_DATA.map(r => r["Students Sets"]))).sort();
+    const origRooms = Array.from(new Set(MASTER_DATA.map(r => r.Room))).sort();
+    ALL_CLASSES.length = 0; ALL_CLASSES.push(...origClasses);
+    ALL_ROOMS.length = 0; ALL_ROOMS.push(...origRooms);
+    roomSelect.innerHTML = `<option value="ALL">Semua Ruangan</option>` +
+      origRooms.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join("");
+    state.room = "ALL";
+
+    footerCount.textContent = `${DATA.length} jadwal terdaftar · Teknik Informatika (PTI & SI)`;
+    moveModeRow = null;
+    markDirty(false);
+    render();
+  });
+
+  downloadBtn.addEventListener("click", () => {
+    const cols = ["Activity Id","Day","Hour","Students Sets","PRODI","Subject","Teachers","Activity Tags","Room"];
+    const esc = v => `"${String(v).replace(/"/g,'""')}"`;
+    const lines = [cols.join(",")];
+    DATA.forEach(r => lines.push(cols.map(c => esc(r[c])).join(",")));
+    const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "jadwal-kuliah-ti-diperbarui.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // ---------------- view switching ----------------
+  function render(){
+    if(state.view === "table"){
+      tableView.style.display = "block";
+      gridView.style.display = "none";
+      renderTable();
+    } else {
+      tableView.style.display = "none";
+      gridView.style.display = "block";
+      renderGrid();
+    }
+    updateLiveHighlights();
+  }
+
+  // ---------------- LIVE HIGHLIGHT: jadwal sedang berlangsung ----------------
+  // Sesuai jam & hari perangkat pengguna saat ini (SENIN-SABTU, tidak ada highlight di hari Minggu)
+  const DOW_TO_DAY = {1:"SENIN",2:"SELASA",3:"RABU",4:"KAMIS",5:"JUMAT",6:"SABTU"};
+  function getNowInfo(){
+    const now = new Date();
+    const day = DOW_TO_DAY[now.getDay()] || null; // null on Sunday
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mm = String(now.getMinutes()).padStart(2,"0");
+    return { day, time: `${hh}:${mm}` };
+  }
+  function updateLiveHighlights(){
+    const { day, time } = getNowInfo();
+    document.querySelectorAll("[data-live-day]").forEach(el => {
+      const isLive = !!day
+        && el.dataset.liveDay === day
+        && time >= el.dataset.liveStart
+        && time < el.dataset.liveEnd;
+      el.classList.toggle("is-live", isLive);
+    });
+  }
+  // perbarui highlight secara berkala tanpa perlu render ulang seluruh tampilan
+  setInterval(updateLiveHighlights, 20000);
+
+  // ---------------- reveal (scroll / render animation) ----------------
+  let revealObserver = null;
+  function initRevealObserver(){
+    if(typeof IntersectionObserver === "undefined") return; // graceful fallback below
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add("in");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.08, rootMargin:"0px 0px -40px 0px"});
+  }
+  function runReveal(scope){
+    const els = scope.querySelectorAll(".reveal:not(.in)");
+    if(revealObserver){
+      els.forEach(el => revealObserver.observe(el));
+    } else {
+      els.forEach(el => el.classList.add("in")); // no IO support: just show immediately
+    }
+  }
+
+  // ---------------- events ----------------
+  searchInput.addEventListener("input", () => {
+    state.query = searchInput.value;
+    clearBtn.classList.toggle("show", state.query.length > 0);
+    render();
+  });
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    state.query = "";
+    clearBtn.classList.remove("show");
+    searchInput.focus();
+    render();
+  });
+  prodiChips.addEventListener("click", (e) => {
+    const btn = e.target.closest(".chip");
+    if(!btn) return;
+    state.prodi = btn.dataset.prodi;
+    [...prodiChips.children].forEach(c => c.classList.toggle("active", c === btn));
+    render();
+  });
+  tagChips.addEventListener("click", (e) => {
+    const btn = e.target.closest(".chip");
+    if(!btn) return;
+    state.tag = btn.dataset.tag;
+    [...tagChips.children].forEach(c => c.classList.toggle("active", c === btn));
+    moveModeRow = null;
+    render();
+  });
+  roomSelect.addEventListener("change", () => {
+    state.room = roomSelect.value;
+    render();
+  });
+  dayStrip.addEventListener("click", (e) => {
+    const btn = e.target.closest(".day-chip");
+    if(!btn) return;
+    state.day = btn.dataset.day;
+    [...dayStrip.children].forEach(c => c.classList.toggle("active", c === btn));
+    render();
+  });
+  btnTable.addEventListener("click", () => {
+    state.view = "table";
+    btnTable.classList.add("active");
+    btnGrid.classList.remove("active");
+    render();
+  });
+  btnGrid.addEventListener("click", () => {
+    state.view = "grid";
+    btnGrid.classList.add("active");
+    btnTable.classList.remove("active");
+    render();
+  });
+  classSelect.addEventListener("change", () => {
+    state.selectedClass = classSelect.value;
+    moveModeRow = null;
+    renderGrid();
+  });
+
+  // ---------------- init ----------------
+  ALL_ROOMS.forEach(room => {
+    const opt = document.createElement("option");
+    opt.value = room;
+    opt.textContent = room;
+    roomSelect.appendChild(opt);
+  });
+
+  initRevealObserver();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("header .reveal, .controls.reveal, .day-strip.reveal, .action-row.reveal").forEach((el,i) => {
+      setTimeout(() => el.classList.add("in"), 60 + i*70);
+    });
+  });
+  // in case script runs after DOMContentLoaded already fired
+  if(document.readyState !== "loading"){
+    document.querySelectorAll("header .reveal, .controls.reveal, .day-strip.reveal, .action-row.reveal").forEach((el,i) => {
+      setTimeout(() => el.classList.add("in"), 60 + i*70);
+    });
+  }
+
+  render();
+})();
+
+</script>
+</body>
+</html>
